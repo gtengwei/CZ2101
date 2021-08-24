@@ -20,12 +20,3 @@ void insertion_sort(int* array, int n) {
     }
     
 }
-
-int main() {
-    int arr[]{2, 4, 3, 5, 1};
-    insertion_sort(arr, 5);
-    for (auto i: arr) {
-        std::cout << i << ' ';
-    }
-    std::cout << '\n';
-}

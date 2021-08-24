@@ -63,13 +63,3 @@ void merge_sort(int* array, int begin, int end) {
     // Then we gotta merge the arrays.
     merge(array, begin, mid, end);
 }
-
-int main() {
-    int arr[]{3, 5, 4, 1, 2, 7, 6, 9, 8};
-    merge_sort(arr, 0, sizeof(arr)/sizeof(int));
-    
-    for (int i: arr) {
-        std::cout << i << ' ';
-    }
-    std::cout << '\n';
-}
