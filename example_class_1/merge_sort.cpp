@@ -1,8 +1,9 @@
 // This file contains an implementation for a
 // merge sort.
+#include "merge_sort.h"
 #include <iostream>
 
-void merge(int* array, int begin, int mid, int end) {
+void __merge(int* array, int begin, int mid, int end) {
     // Create a temporary array to store the sorted elements.
     int len{end - begin + 1};
 
@@ -61,5 +62,5 @@ void merge_sort(int* array, int begin, int end) {
     merge_sort(array, mid+1, end);
 
     // Then we gotta merge the arrays.
-    merge(array, begin, mid, end);
+    __merge(array, begin, mid, end);
 }

@@ -1,5 +1,6 @@
 // This file contains an implementation for a 
 // insertion sort.
+#include "insertion_sort.h"
 #include <iostream>
 
 void insertion_sort(int* array, int n) {
