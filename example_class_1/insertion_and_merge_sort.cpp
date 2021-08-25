@@ -1,5 +1,6 @@
 #include "insertion_and_merge_sort.h"
 #include "merge_sort.h"
+#include "global.h"
 #include <iostream>
 
 void __insertion(int *array, int begin, int end) {
@@ -11,13 +12,14 @@ void __insertion(int *array, int begin, int end) {
             // Swap the values
             array[j] = array[j-1];
             --j;
+            comparison++;
         }
         // Set element in the correct location
         array[j] = to_insert;
     }
 }
 
-// The idea is that past a certain size threshold, 
+// The idea is that past a certain size threshold,
 // we will switch to using insertion sort to sort the array.
 void merge_and_insert(int *array, int begin, int end, int threshold) {
     // Termination case.
