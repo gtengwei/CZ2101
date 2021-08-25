@@ -1,9 +1,9 @@
 // This file contains an implementation for a
 // merge sort.
 #include "merge_sort.h"
-#include "global.h"
 #include <iostream>
 
+int keyComparison_merge_sort = 0;
 void __merge(int* array, int begin, int mid, int end) {
     // Create a temporary array to store the sorted elements.
     int len{end - begin + 1};
@@ -65,4 +65,8 @@ void merge_sort(int* array, int begin, int end) {
 
     // Then we gotta merge the arrays.
     __merge(array, begin, mid, end);
+}
+
+void print_merge_sort(){
+    std::cout <<  "The number of key comparisons = " + std::to_string(keyComparison_merge_sort);
 }
