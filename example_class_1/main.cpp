@@ -1,104 +1,103 @@
 #include "insertion_and_merge_sort.h"
 #include "insertion_sort.h"
 #include "merge_sort.h"
-#include "global.h"
+
 #include <iostream>
-#include <windows.h>
-#include <string>
-#include <iomanip>
-// TODO: Part a) and b)
+#include <random>
+#include <chrono>
+#include <fstream>
 
+using namespace std::chrono;
 
+// Generate CPU times for each sort, for different input sizes and different input types (ascending, descending, random)
+void part_a() {
+    static std::mt19937 mersenne{static_cast<std::mt19937::result_type>(19937)};
+    static constexpr int ITERATIONS = 50;
+    static constexpr int MAX_SIZE = 500;
+    // Study how to determine an optimal value of S for best performance of this
+    //hybrid algorithm on different input cases and input sizes.
+    
+    // Save results in new file.
+    std::ofstream file{"results.csv"};
+    if (!file) {
+        std::cerr << "Error opening file!";
+        return;
+    }
+    file << "size,sort_type,input_type,micro_time" << std::endl;
+
+    // To do so, we test ascending, descending, and random inputs for both 
+    // insertion sort and merge sort.
+    // For each size, we test.
+    for (int size{0}; size < MAX_SIZE; ++size) {
+        // Create dynamic array.
+        int* arr{new int[size]};
+
+        microseconds totals[6]{};
+        for (int iter{0}; iter < ITERATIONS; ++iter) {
+            // Test ascending.
+            for (int i{0}; i < size; ++i) {
+                arr[i] = i;
+            }
+            auto start = high_resolution_clock::now();
+            insertion_sort(arr, size);
+            auto end = high_resolution_clock::now();
+            totals[0] += duration_cast<microseconds>(end-start);
+
+            for (int i{0}; i < size; ++i) {
+                arr[i] = i;
+            }
+            start = high_resolution_clock::now();
+            merge_sort(arr, 0, size-1);
+            end = high_resolution_clock::now();
+            totals[1] += duration_cast<microseconds>(end-start);
+
+            // Test descending
+            for (int i{size-1}, index{0}; i >= 0; --i, ++index) {
+                arr[index] = i;
+            }
+            start = high_resolution_clock::now();
+            insertion_sort(arr, size);
+            end = high_resolution_clock::now();
+            totals[2] += duration_cast<microseconds>(end-start);
+
+            for (int i{size-1}, index{0}; i >= 0; --i, ++index) {
+                arr[index] = i;
+            }
+            start = high_resolution_clock::now();
+            merge_sort(arr, 0, size-1);
+            end = high_resolution_clock::now();
+            totals[3] += duration_cast<microseconds>(end-start);
+
+            // Test random
+            std::uniform_int_distribution<> dist{0, 1000};
+            for (int i{0}; i < size; ++i) {
+                arr[i] = dist(mersenne);
+            }
+            start = high_resolution_clock::now();
+            insertion_sort(arr, size);
+            end = high_resolution_clock::now();
+            totals[4] += duration_cast<microseconds>(end-start);
+
+            for (int i{0}; i < size; ++i) {
+                arr[i] = dist(mersenne);
+            }
+            start = high_resolution_clock::now();
+            merge_sort(arr, 0, size-1);
+            end = high_resolution_clock::now();
+            totals[5] += duration_cast<microseconds>(end-start);
+        }
+        file << size << ',' << "insertion" << ',' << "ascending"  << ',' << (static_cast<double>(totals[0].count()) / ITERATIONS) << std::endl;
+        file << size << ',' << "merge"     << ',' << "ascending"  << ',' << (static_cast<double>(totals[1].count()) / ITERATIONS) << std::endl;
+        file << size << ',' << "insertion" << ',' << "descending" << ',' << (static_cast<double>(totals[2].count()) / ITERATIONS) << std::endl;
+        file << size << ',' << "merge"     << ',' << "descending" << ',' << (static_cast<double>(totals[3].count()) / ITERATIONS) << std::endl;
+        file << size << ',' << "insertion" << ',' << "random"     << ',' << (static_cast<double>(totals[4].count()) / ITERATIONS) << std::endl;
+        file << size << ',' << "merge"     << ',' << "random"     << ',' << (static_cast<double>(totals[5].count()) / ITERATIONS) << std::endl;
+        delete[] arr;
+    }
+    file.close();
+}
 
 int main() {
-    
-    int n,i,random,threshold;
-    LARGE_INTEGER counterStart, counterEnd, frequency;
-    QueryPerformanceFrequency(&frequency);
-    double time;    //for tracking timing performance
-
-
-    // take input from user for number of elements
-    std::cout << "please enter the number of elements : ";
-    std::cin >> n;
-    // declare array size of n
-    int array[n];
-
-    std::cout << "please enter your threshold value: ";
-    std::cin >> threshold;
-
-    for (i=0;i<n;i++){
-        random = rand();
-        array[i] = random;
-    }
-
-    //int array[]{4, 7, 5, 6, 8, 4, 2, 0, 5, 2, 5, 7, -2, -5, 5, 3, 12, 34, 67, 2, 2, 1, 7};
-
-    int size{sizeof(array)/sizeof(int)};
-
-
-
-    //merge_and_insert hybrid performance
-
-    QueryPerformanceCounter(&counterStart);
-    merge_and_insert(array, 0, size, threshold);
-    QueryPerformanceCounter(&counterEnd);
-
-
-    for (int i{0}; i < size; ++i) {
-        std::cout << array[i] << ' ';
-    }
-
-    std::cout << '\n';
-    //print the key comparisons
-    std::cout <<  "The number of key comparisons = " + std::to_string(comparison);
-    std::cout << '\n';
-
-
-
-    time = (double)((double)(counterEnd.QuadPart - counterStart.QuadPart)/(double)frequency.QuadPart);
-
-    //change from seconds to milliseconds
-    time *= 1000;
-
-
-
-    std::ostringstream ss;
-    ss.precision(8);
-    ss << std::fixed << time;
-    std::cout << "The time it took for merge_and_insert is " + ss.str() + " milliseconds";
-
-    //reset the counter
-    comparison = 0;
-
-    std::cout << '\n';
-    std::cout << '\n';
-
-    //original merge_sort implementation
-
-    QueryPerformanceCounter(&counterStart);
-    merge_sort(array, 0, size);
-    QueryPerformanceCounter(&counterEnd);
-
-    for (int i{0}; i < size; ++i) {
-        std::cout << array[i] << ' ';
-    }
-
-    std::cout << '\n';
-    //print the key comparisons
-    std::cout <<  "The number of key comparisons = " + std::to_string(comparison);
-    std::cout << '\n';
-
-    time = (double)((double)(counterEnd.QuadPart - counterStart.QuadPart)/(double)frequency.QuadPart);
-
-    //change from seconds to milliseconds
-    time *= 1000;
-
-    std::ostringstream sd;
-    sd.precision(8);
-    sd << std::fixed << time;
-
-    std::cout << "The time it took for merge_sort is " + sd.str() + " milliseconds";
-
+    part_a();
     return 0;
 }
