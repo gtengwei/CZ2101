@@ -23,6 +23,7 @@ void __merge(int* array, int begin, int mid, int end) {
             ++right_index;
         }
         ++insert_index;
+        comparison++;
     }
 
     // Check remaining elements for both sides.
