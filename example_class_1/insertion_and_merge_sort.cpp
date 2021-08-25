@@ -1,7 +1,8 @@
 #include "insertion_and_merge_sort.h"
 #include "merge_sort.h"
-#include "global.h"
 #include <iostream>
+
+int keyComparison_insertion_and_merge_sort = 0;
 
 void __insertion(int *array, int begin, int end) {
     // Sort the array from beginning index to end index.
@@ -12,7 +13,8 @@ void __insertion(int *array, int begin, int end) {
             // Swap the values
             array[j] = array[j-1];
             --j;
-            comparison++;
+            keyComparison_insertion_and_merge_sort++;
+
         }
         // Set element in the correct location
         array[j] = to_insert;
@@ -33,6 +35,7 @@ void merge_and_insert(int *array, int begin, int end, int threshold) {
     if (size <= threshold) {
         // We do insertion sort if under or equal to threshold.
         __insertion(array, begin, end);
+
     } else {
         // We do the typical merge sort here.
         int mid{begin + (end - begin) / 2};
@@ -44,4 +47,9 @@ void merge_and_insert(int *array, int begin, int end, int threshold) {
         // Then merge the arrays
         __merge(array, begin, mid, end);
     }
+}
+
+void print_insertion_and_merge_sort(){
+
+    std::cout <<  "The number of key comparisons = " + std::to_string(keyComparison_insertion_and_merge_sort);
 }
