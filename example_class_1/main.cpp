@@ -11,11 +11,11 @@
 
 
 int main() {
-
+    
     int n,i,random,threshold;
     LARGE_INTEGER counterStart, counterEnd, frequency;
     QueryPerformanceFrequency(&frequency);
-    double time;
+    double time;    //for tracking timing performance
 
 
     // take input from user for number of elements
