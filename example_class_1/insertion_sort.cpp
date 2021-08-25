@@ -1,7 +1,8 @@
-// This file contains an implementation for a 
+// This file contains an implementation for a
 // insertion sort.
 #include "insertion_sort.h"
 #include <iostream>
+#include "global.h"
 
 void insertion_sort(int* array, int n) {
     // Sorts an array of length n using
@@ -10,14 +11,15 @@ void insertion_sort(int* array, int n) {
         int to_sort{array[i]};
         int j{i};
         while (j > 0 && to_sort < array[j-1]) {
-            // Check if current element is less than 
+            // Check if current element is less than
             // previous element.
             // If yes, then swap.
             array[j] = array[j-1];
             --j;
+            comparison++;
         }
         // Set the element to sort at the correct location.
         array[j] = to_sort;
     }
-    
+
 }
