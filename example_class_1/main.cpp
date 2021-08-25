@@ -9,6 +9,9 @@
 
 using namespace std::chrono;
 
+// TODO: Remove global counter and let each sort count its own number of comparisons.
+// TODO: Add comparisons column in the CSV file.
+
 // Generate CPU times for each sort, for different input sizes and different input types (ascending, descending, random)
 void part_a() {
     static std::mt19937 mersenne{static_cast<std::mt19937::result_type>(19937)};
