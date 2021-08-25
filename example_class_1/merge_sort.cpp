@@ -1,6 +1,7 @@
 // This file contains an implementation for a
 // merge sort.
 #include "merge_sort.h"
+#include "global.h"
 #include <iostream>
 
 void __merge(int* array, int begin, int mid, int end) {
