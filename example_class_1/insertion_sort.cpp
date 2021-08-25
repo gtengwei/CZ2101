@@ -2,8 +2,8 @@
 // insertion sort.
 #include "insertion_sort.h"
 #include <iostream>
-#include "global.h"
 
+int keyComparison_insertion_sort = 0;
 void insertion_sort(int* array, int n) {
     // Sorts an array of length n using
     // insertion sort algorithm.
@@ -22,4 +22,8 @@ void insertion_sort(int* array, int n) {
         array[j] = to_sort;
     }
 
+}
+
+void print_insertion_sort(){
+    std::cout <<  "The number of key comparisons = " + std::to_string(keyComparison_insertion_sort);
 }
