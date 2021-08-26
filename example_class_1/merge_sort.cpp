@@ -48,6 +48,7 @@ int __merge(int* array, int begin, int mid, int end) {
 
     // Make sure to delete the dynamic array.
     delete[] temp;
+    return comparisons;
 }
 
 int merge_sort(int* array, int begin, int end) {

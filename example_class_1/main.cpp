@@ -9,8 +9,6 @@
 
 using namespace std::chrono;
 
-// TODO: Add comparisons column in the CSV file.
-
 // Generate CPU times for each sort, for different input sizes and different input types (ascending, descending, random)
 void part_a() {
     // Create a random generator with seed 19937 (feel free to change this).
@@ -29,7 +27,7 @@ void part_a() {
     }
 
     // Columns for the CSV file.
-    file << "size,sort_type,input_type,micro_time" << std::endl;
+    file << "size,sort_type,input_type,micro_time,comparisons" << std::endl;
 
     // To do so, we test ascending, descending, and random inputs for both 
     // insertion sort and merge sort.
@@ -39,13 +37,14 @@ void part_a() {
         int* arr{new int[size]};
 
         microseconds totals[6]{};
+        double comps[6]{};
         for (int iter{0}; iter < ITERATIONS; ++iter) {
             // Test ascending.
             for (int i{0}; i < size; ++i) {
                 arr[i] = i;
             }
             auto start = high_resolution_clock::now();
-            insertion_sort(arr, size);
+            comps[0] += insertion_sort(arr, size);
             auto end = high_resolution_clock::now();
             totals[0] += duration_cast<microseconds>(end-start);
 
@@ -53,7 +52,7 @@ void part_a() {
                 arr[i] = i;
             }
             start = high_resolution_clock::now();
-            merge_sort(arr, 0, size-1);
+            comps[1] += merge_sort(arr, 0, size-1);
             end = high_resolution_clock::now();
             totals[1] += duration_cast<microseconds>(end-start);
 
@@ -62,7 +61,7 @@ void part_a() {
                 arr[index] = i;
             }
             start = high_resolution_clock::now();
-            insertion_sort(arr, size);
+            comps[2] += insertion_sort(arr, size);
             end = high_resolution_clock::now();
             totals[2] += duration_cast<microseconds>(end-start);
 
@@ -70,7 +69,7 @@ void part_a() {
                 arr[index] = i;
             }
             start = high_resolution_clock::now();
-            merge_sort(arr, 0, size-1);
+            comps[3] += merge_sort(arr, 0, size-1);
             end = high_resolution_clock::now();
             totals[3] += duration_cast<microseconds>(end-start);
 
@@ -80,7 +79,7 @@ void part_a() {
                 arr[i] = dist(mersenne);
             }
             start = high_resolution_clock::now();
-            insertion_sort(arr, size);
+            comps[4] += insertion_sort(arr, size);
             end = high_resolution_clock::now();
             totals[4] += duration_cast<microseconds>(end-start);
 
@@ -88,16 +87,22 @@ void part_a() {
                 arr[i] = dist(mersenne);
             }
             start = high_resolution_clock::now();
-            merge_sort(arr, 0, size-1);
+            comps[5] += merge_sort(arr, 0, size-1);
             end = high_resolution_clock::now();
             totals[5] += duration_cast<microseconds>(end-start);
         }
-        file << size << ',' << "insertion" << ',' << "ascending"  << ',' << (static_cast<double>(totals[0].count()) / ITERATIONS) << std::endl;
-        file << size << ',' << "merge"     << ',' << "ascending"  << ',' << (static_cast<double>(totals[1].count()) / ITERATIONS) << std::endl;
-        file << size << ',' << "insertion" << ',' << "descending" << ',' << (static_cast<double>(totals[2].count()) / ITERATIONS) << std::endl;
-        file << size << ',' << "merge"     << ',' << "descending" << ',' << (static_cast<double>(totals[3].count()) / ITERATIONS) << std::endl;
-        file << size << ',' << "insertion" << ',' << "random"     << ',' << (static_cast<double>(totals[4].count()) / ITERATIONS) << std::endl;
-        file << size << ',' << "merge"     << ',' << "random"     << ',' << (static_cast<double>(totals[5].count()) / ITERATIONS) << std::endl;
+        file << size << ',' << "insertion" << ',' << "ascending"  << ',' 
+            << (static_cast<double>(totals[0].count()) / ITERATIONS) << ',' << (comps[0] / ITERATIONS) << std::endl;
+        file << size << ',' << "merge"     << ',' << "ascending"  << ',' 
+            << (static_cast<double>(totals[1].count()) / ITERATIONS) << ',' << (comps[1] / ITERATIONS) << std::endl;
+        file << size << ',' << "insertion" << ',' << "descending" << ',' 
+            << (static_cast<double>(totals[2].count()) / ITERATIONS) << ',' << (comps[2] / ITERATIONS) << std::endl;
+        file << size << ',' << "merge"     << ',' << "descending" << ',' 
+            << (static_cast<double>(totals[3].count()) / ITERATIONS) << ',' << (comps[3] / ITERATIONS) << std::endl;
+        file << size << ',' << "insertion" << ',' << "random"     << ',' 
+            << (static_cast<double>(totals[4].count()) / ITERATIONS) << ',' << (comps[4] / ITERATIONS) << std::endl;
+        file << size << ',' << "merge"     << ',' << "random"     << ',' 
+            << (static_cast<double>(totals[5].count()) / ITERATIONS) << ',' << (comps[5] / ITERATIONS) << std::endl;
         delete[] arr;
     }
     file.close();

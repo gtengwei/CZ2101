@@ -8,12 +8,12 @@ int __insertion(int *array, int begin, int end) {
     for (int i{begin+1}; i <= end; ++i) {
         int to_insert{array[i]};
         int j{i};
+        comparisons++; // NOTE: At least one comparison everytime.
         while (j > begin && to_insert < array[j-1]) {
             // Swap the values
             array[j] = array[j-1];
             --j;
             comparisons++;
-
         }
         // Set element in the correct location
         array[j] = to_insert;

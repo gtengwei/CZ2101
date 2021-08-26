@@ -10,6 +10,7 @@ int insertion_sort(int* array, int n) {
     for (int i{1}; i < n; ++i) {
         int to_sort{array[i]};
         int j{i};
+        comparisons++; // NOTE: At least one comparison everytime.
         while (j > 0 && to_sort < array[j-1]) {
             // Check if current element is less than
             // previous element.
