@@ -3,8 +3,8 @@
 #include "insertion_sort.h"
 #include <iostream>
 
-int keyComparison_insertion_sort = 0;
-void insertion_sort(int* array, int n) {
+int insertion_sort(int* array, int n) {
+    int comparisons{0};
     // Sorts an array of length n using
     // insertion sort algorithm.
     for (int i{1}; i < n; ++i) {
@@ -16,14 +16,10 @@ void insertion_sort(int* array, int n) {
             // If yes, then swap.
             array[j] = array[j-1];
             --j;
-            comparison++;
+            comparisons++;
         }
         // Set the element to sort at the correct location.
         array[j] = to_sort;
     }
-
-}
-
-void print_insertion_sort(){
-    std::cout <<  "The number of key comparisons = " + std::to_string(keyComparison_insertion_sort);
+    return comparisons;
 }

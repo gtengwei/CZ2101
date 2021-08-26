@@ -3,8 +3,9 @@
 #include "merge_sort.h"
 #include <iostream>
 
-int keyComparison_merge_sort = 0;
-void __merge(int* array, int begin, int mid, int end) {
+int __merge(int* array, int begin, int mid, int end) {
+    int comparisons{0};
+
     // Create a temporary array to store the sorted elements.
     int len{end - begin + 1};
 
@@ -24,7 +25,7 @@ void __merge(int* array, int begin, int mid, int end) {
             ++right_index;
         }
         ++insert_index;
-        comparison++;
+        comparisons++;
     }
 
     // Check remaining elements for both sides.
@@ -49,24 +50,22 @@ void __merge(int* array, int begin, int mid, int end) {
     delete[] temp;
 }
 
-void merge_sort(int* array, int begin, int end) {
+int merge_sort(int* array, int begin, int end) {
     // Terminating condition. If begin == end, then only
     // one element left, just return.
     if (begin >= end) {
-        return;
+        return 0;
     }
 
+    int comparisons{0};
     // Calculate the middle of the array
     int mid{begin + (end - begin) / 2};
 
     // Recursively sort each half of the array.
-    merge_sort(array, begin, mid);
-    merge_sort(array, mid+1, end);
+    comparisons += merge_sort(array, begin, mid);
+    comparisons += merge_sort(array, mid+1, end);
 
     // Then we gotta merge the arrays.
-    __merge(array, begin, mid, end);
-}
-
-void print_merge_sort(){
-    std::cout <<  "The number of key comparisons = " + std::to_string(keyComparison_merge_sort);
+    comparisons += __merge(array, begin, mid, end);
+    return comparisons;
 }

@@ -1,31 +1,34 @@
-#include "insertion_and_merge_sort.h"
+#include "hybrid_sort.h"
 #include "insertion_sort.h"
 #include "merge_sort.h"
 
 #include <iostream>
 #include <random>
-#include <chrono>
-#include <fstream>
+#include <chrono>    // For timing code
+#include <fstream>   // For writing results to file
 
 using namespace std::chrono;
 
-// TODO: Remove global counter and let each sort count its own number of comparisons.
 // TODO: Add comparisons column in the CSV file.
 
 // Generate CPU times for each sort, for different input sizes and different input types (ascending, descending, random)
 void part_a() {
+    // Create a random generator with seed 19937 (feel free to change this).
     static std::mt19937 mersenne{static_cast<std::mt19937::result_type>(19937)};
+
     static constexpr int ITERATIONS = 50;
     static constexpr int MAX_SIZE = 500;
     // Study how to determine an optimal value of S for best performance of this
     //hybrid algorithm on different input cases and input sizes.
     
-    // Save results in new file.
+    // Save results in result.csv.
     std::ofstream file{"results.csv"};
     if (!file) {
         std::cerr << "Error opening file!";
         return;
     }
+
+    // Columns for the CSV file.
     file << "size,sort_type,input_type,micro_time" << std::endl;
 
     // To do so, we test ascending, descending, and random inputs for both 
