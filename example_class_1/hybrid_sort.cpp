@@ -32,11 +32,10 @@ int hybrid_sort(int *array, int begin, int end, int threshold) {
     int comparisons{0};
     // Then we check for the threshold. If the size of the remaining array
     // is less or equal to the threshold, then we use insertion sort to sort the array.
-    int size{begin-end};
+    int size{end-begin+1};
     if (size <= threshold) {
         // We do insertion sort if under or equal to threshold.
         comparisons += __insertion(array, begin, end);
-
     } else {
         // We do the typical merge sort here.
         int mid{begin + (end - begin) / 2};

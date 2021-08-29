@@ -14,8 +14,8 @@ void part_a() {
     // Create a random generator with seed 19937 (feel free to change this).
     static std::mt19937 mersenne{static_cast<std::mt19937::result_type>(19937)};
 
-    static constexpr int ITERATIONS = 50;
-    static constexpr int MAX_SIZE = 500;
+    static constexpr int ITERATIONS = 5000; // No. of times to repeat each algo (to take average)
+    static constexpr int MAX_SIZE = 300; // Max number of elements in the array to sort.
     // Study how to determine an optimal value of S for best performance of this
     //hybrid algorithm on different input cases and input sizes.
 
@@ -35,7 +35,7 @@ void part_a() {
     for (int size{0}; size < MAX_SIZE; ++size) {
         // Create dynamic array.
         int* arr{new int[size]};
-        int threshold = 10;
+        int threshold = 150;
 
         microseconds totals[9]{};
         double comps[9]{};
@@ -57,6 +57,9 @@ void part_a() {
             end = high_resolution_clock::now();
             totals[1] += duration_cast<microseconds>(end-start);
 
+            for (int i{0}; i < size; ++i) {
+                arr[i] = i;
+            }
             start = high_resolution_clock::now();
             comps[2] += hybrid_sort(arr, 0, size-1, threshold);
             end = high_resolution_clock::now();
@@ -142,7 +145,17 @@ void part_a() {
     file.close();
 }
 
+void test() {
+    int arr[]{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    hybrid_sort(arr, 0, 19, 10);
+    for (auto i: arr) {
+        std::cout << i << ' ';
+    }
+    std::cout << '\n';
+}
+
 int main() {
     part_a();
+    // test();
     return 0;
 }

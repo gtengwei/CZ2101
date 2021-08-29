@@ -24,12 +24,3 @@ Therefore, the time complexity of sorting the remaining arrays is `O((n/s) * s^2
 
 Therefore, the time complexity of Merge-Insertion Sort is:
  `O(ns + nlog(n/s))`.
-
-# Space Complexity of Merge-Insertion Sort
-
-Only the merge portion of the algorithm takes up space.
-
-The recursion stack takes up `O(log(n/s))` space. The auxiliary space to store the elements while merging the arrays is `O(n)`. The space to store the elements is much bigger than the recursion stack.
-
-Therefore, in the worst case, the space complexity of the algorithm is simply:
-`O(n)`.
