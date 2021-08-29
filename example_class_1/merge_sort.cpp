@@ -8,9 +8,7 @@ int __merge(int* array, int begin, int mid, int end) {
 
     // Create a temporary array to store the sorted elements.
     int len{end - begin + 1};
-
-    // Create a dynamic array to store the temp elements.
-    int* temp = new int[len];
+    int* temp{new int[len]};
     int insert_index{0};
 
     // Loop through both sides of the array and insert accordingly.

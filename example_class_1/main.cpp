@@ -10,12 +10,12 @@
 using namespace std::chrono;
 
 // Generate CPU times for each sort, for different input sizes and different input types (ascending, descending, random)
-void part_a() {
+void generate_timings() {
     // Create a random generator with seed 19937 (feel free to change this).
     static std::mt19937 mersenne{static_cast<std::mt19937::result_type>(19937)};
 
-    static constexpr int ITERATIONS = 5000; // No. of times to repeat each algo (to take average)
-    static constexpr int MAX_SIZE = 300; // Max number of elements in the array to sort.
+    static constexpr int ITERATIONS = 7000; // No. of times to repeat each algo (to take average)
+    static constexpr int MAX_SIZE = 250; // Max number of elements in the array to sort.
     // Study how to determine an optimal value of S for best performance of this
     //hybrid algorithm on different input cases and input sizes.
 
@@ -35,7 +35,6 @@ void part_a() {
     for (int size{0}; size < MAX_SIZE; ++size) {
         // Create dynamic array.
         int* arr{new int[size]};
-        int threshold = 150;
 
         microseconds totals[9]{};
         double comps[9]{};
@@ -61,7 +60,7 @@ void part_a() {
                 arr[i] = i;
             }
             start = high_resolution_clock::now();
-            comps[2] += hybrid_sort(arr, 0, size-1, threshold);
+            comps[2] += hybrid_sort(arr, 0, size-1, 30); // Threshold 30.
             end = high_resolution_clock::now();
             totals[2] += duration_cast<microseconds>(end-start);
 
@@ -86,7 +85,7 @@ void part_a() {
                 arr[index] = i;
             }
             start = high_resolution_clock::now();
-            comps[5] += hybrid_sort(arr, 0, size-1, threshold);
+            comps[5] += hybrid_sort(arr, 0, size-1, 35); // Threshold 35.
             end = high_resolution_clock::now();
             totals[5] += duration_cast<microseconds>(end-start);
 
@@ -112,7 +111,7 @@ void part_a() {
                 arr[i] = dist(mersenne);
             }
             start = high_resolution_clock::now();
-            comps[8] += hybrid_sort(arr, 0, size-1, threshold);
+            comps[8] += hybrid_sort(arr, 0, size-1, 165); // Threshold 165
             end = high_resolution_clock::now();
             totals[8] += duration_cast<microseconds>(end-start);
         }
@@ -120,7 +119,7 @@ void part_a() {
             << (static_cast<double>(totals[0].count()) / ITERATIONS) << ',' << (comps[0] / ITERATIONS) << std::endl;
         file << size << ',' << "merge"     << ',' << "ascending"  << ','
             << (static_cast<double>(totals[1].count()) / ITERATIONS) << ',' << (comps[1] / ITERATIONS) << std::endl;
-        file << size << ',' << "hybrid"     << ',' << "ascending"  << ','
+        file << size << ',' << "hybrid"    << ',' << "ascending"  << ','
             << (static_cast<double>(totals[2].count()) / ITERATIONS) << ',' << (comps[2] / ITERATIONS) << std::endl;
 
 
@@ -128,7 +127,7 @@ void part_a() {
             << (static_cast<double>(totals[3].count()) / ITERATIONS) << ',' << (comps[3] / ITERATIONS) << std::endl;
         file << size << ',' << "merge"     << ',' << "descending" << ','
             << (static_cast<double>(totals[4].count()) / ITERATIONS) << ',' << (comps[4] / ITERATIONS) << std::endl;
-        file << size << ',' << "hybrid"     << ',' << "descending" << ','
+        file << size << ',' << "hybrid"    << ',' << "descending" << ','
             << (static_cast<double>(totals[5].count()) / ITERATIONS) << ',' << (comps[5] / ITERATIONS) << std::endl;
 
 
@@ -136,11 +135,10 @@ void part_a() {
             << (static_cast<double>(totals[6].count()) / ITERATIONS) << ',' << (comps[6] / ITERATIONS) << std::endl;
         file << size << ',' << "merge"     << ',' << "random"     << ','
             << (static_cast<double>(totals[7].count()) / ITERATIONS) << ',' << (comps[7] / ITERATIONS) << std::endl;
-        file << size << ',' << "hybrid"     << ',' << "random"     << ','
+        file << size << ',' << "hybrid"    << ',' << "random"     << ','
             << (static_cast<double>(totals[8].count()) / ITERATIONS) << ',' << (comps[8] / ITERATIONS) << std::endl;
 
         delete[] arr;
-
     }
     file.close();
 }
@@ -155,7 +153,7 @@ void test() {
 }
 
 int main() {
-    part_a();
+    generate_timings();
     // test();
     return 0;
 }
