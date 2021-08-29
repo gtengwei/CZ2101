@@ -142,7 +142,7 @@ void part_a() {
     file.close();
 }
 
-//int main() {
-//    part_a();
-//    return 0;
-//}
+int main() {
+    part_a();
+    return 0;
+}
