@@ -35,6 +35,7 @@ void part_a() {
     for (int size{0}; size < MAX_SIZE; ++size) {
         // Create dynamic array.
         int* arr{new int[size]};
+        int threshold = 10;
 
         microseconds totals[9]{};
         double comps[9]{};
@@ -57,7 +58,7 @@ void part_a() {
             totals[1] += duration_cast<microseconds>(end-start);
 
             start = high_resolution_clock::now();
-            comps[2] += hybrid_sort(arr, 0, size-1, 10);
+            comps[2] += hybrid_sort(arr, 0, size-1, threshold);
             end = high_resolution_clock::now();
             totals[2] += duration_cast<microseconds>(end-start);
 
@@ -82,7 +83,7 @@ void part_a() {
                 arr[index] = i;
             }
             start = high_resolution_clock::now();
-            comps[5] += hybrid_sort(arr, 0, size-1, 10);
+            comps[5] += hybrid_sort(arr, 0, size-1, threshold);
             end = high_resolution_clock::now();
             totals[5] += duration_cast<microseconds>(end-start);
 
@@ -108,7 +109,7 @@ void part_a() {
                 arr[i] = dist(mersenne);
             }
             start = high_resolution_clock::now();
-            comps[8] += hybrid_sort(arr, 0, size-1, 10);
+            comps[8] += hybrid_sort(arr, 0, size-1, threshold);
             end = high_resolution_clock::now();
             totals[8] += duration_cast<microseconds>(end-start);
         }
@@ -141,7 +142,7 @@ void part_a() {
     file.close();
 }
 
-int main() {
-    part_a();
-    return 0;
-}
+//int main() {
+//    part_a();
+//    return 0;
+//}
