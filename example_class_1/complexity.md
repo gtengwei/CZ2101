@@ -8,9 +8,9 @@ In normal merge sort, we have `log(n)` levels.
 
 In the combined sort, we want to stop when an array has `<= s` elements. Hence, there are `log(s)` levels left if we stop at threshold s.
 
-Therefore, we go through `log(n) - log(s)` levels for insertion sort. This is equivalent to `log(n/s)`.
+Therefore, we go through `log(n) - log(s)` levels for merge sort. This is equivalent to `log(n/s)`.
 
-We have `n-1` comparisons for each level. Hence, the time complexity for the insertion part of the algorithm is `O((n-1)log(n/s))` == `O(nlog(n/s))`. 
+We have `n-1` comparisons for each level. Hence, the time complexity for the merge part of the algorithm is `O((n-1)log(n/s))` == `O(nlog(n/s))`. 
 
 ## Insertion portion
 
