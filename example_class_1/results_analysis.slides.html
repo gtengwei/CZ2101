@@ -14422,8 +14422,7 @@ div.jp-OutputPrompt {
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="a)-Comparing-CPU-runtimes-to-determine-a-suitable-S">a) Comparing CPU runtimes to determine a suitable S<a class="anchor-link" href="#a)-Comparing-CPU-runtimes-to-determine-a-suitable-S">&#182;</a></h2><hr>
-
+<h2 id="a)-Comparing-CPU-runtimes-to-determine-a-suitable-S">a) Comparing CPU runtimes to determine a suitable S<a class="anchor-link" href="#a)-Comparing-CPU-runtimes-to-determine-a-suitable-S">&#182;</a></h2>
 </div>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14647,6 +14646,23 @@ div.jp-OutputPrompt {
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Why-not-use-math-to-find-S?">Why not use math to find S?<a class="anchor-link" href="#Why-not-use-math-to-find-S?">&#182;</a></h3>
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>You can, but it will not be accurate, because it does not take into account real-world issues, such as:</p>
+<ol>
+<li>Recursion overhead
+2.Element comparisons</li>
+<li>Copying memory data
+etc...</li>
+</ol>
+
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="b)-Merge-vs-Hybrid-Sort">b) Merge vs Hybrid Sort<a class="anchor-link" href="#b)-Merge-vs-Hybrid-Sort">&#182;</a></h2>
 </div>
 </div></section></section><section><section>
@@ -14718,12 +14734,24 @@ div.jp-OutputPrompt {
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For the sharp increase in key comparison after the size reaches a multiple of the threshold value(e.g. 31, 61,121 etc)</p>
+
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>It is because the merge sort algorithm has to be called <strong>2<sup>n-1</sup> more time (2<sup>n</sup> = size/threshold S)</strong> over the next <strong>2<sup>n</sup></strong> increase in size (e.g. from 120 to 124), to split the array into a size that is less than the threshold value, therefore increasing the number of key comparions significantly for merge sort in a short span and hence the hybrid sort.</p>
+
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Checking-Descending-array">Checking Descending array<a class="anchor-link" href="#Checking-Descending-array">&#182;</a></h3>
 </div>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Based on above results, we know that the threshold we should set for <strong>descending</strong> ordered arrays should be around 35-55.</p>
+<p>Based on the result in part (a), we know that the threshold we should set for <strong>descending</strong> ordered arrays should be around 35-55.</p>
 <p>In this case, we use <strong>35</strong> as the threshold.</p>
 
 </div>
@@ -14790,12 +14818,30 @@ div.jp-OutputPrompt {
 </div></div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For the sharp decrease in key comparison after the size reaches a multiple of the threshold value(e.g. 36, 71 etc), it is similar to the reason in the ascending array.</p>
+
+</div>
+</div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>The merge sort algorithm has to be called <strong>2<sup>n-1</sup> more time (2<sup>n</sup> = size/threshold)</strong> over the next <strong>2<sup>n</sup></strong> increase in size, to split the array into a size that is less than the threshold value, which will be esentially <strong>half the size of the threshold</strong>.</p>
+
+</div>
+</div></div><div class="fragment">
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>This decreases the number of elements for the insertion sort, which will reduce the number of key comparisons significantly as <strong>a descending array is the worst case for insertion sort</strong>. This in turn decreases the key comparisons for the hybrid sort.</p>
+
+</div>
+</div></div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Checking-Random-array">Checking Random array<a class="anchor-link" href="#Checking-Random-array">&#182;</a></h3>
 </div>
 </div><div class="fragment">
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Based on above results, we know that the threshold we should set for <strong>random</strong> ordered arrays should be around 150-170.</p>
+<p>Based on the result in part (a), we know that the threshold we should set for <strong>random</strong> ordered arrays should be around 150-170.</p>
 <p>In this case, we use <strong>165</strong> as the threshold.</p>
 
 </div>
