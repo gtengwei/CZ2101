@@ -10,7 +10,7 @@ In the combined sort, we want to stop when an array has `<= s` elements. Hence, 
 
 Therefore, we go through `log(n) - log(s)` levels for merge sort. This is equivalent to `log(n/s)`.
 
-We have `n-1` comparisons for each level. Hence, the time complexity for the merge part of the algorithm is `O((n-1)log(n/s))` == `O(nlog(n/s))`. 
+We have `O(n)` comparisons for each level. Hence, the time complexity for the merge part of the algorithm is `O(nlog(n/s))`. 
 
 ## Insertion portion
 
