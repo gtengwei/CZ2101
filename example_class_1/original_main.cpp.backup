@@ -36,75 +36,6 @@ int main() {
 
 
 
-    //hybrid performance                                                                    //FOR RANDOM
-
-    QueryPerformanceCounter(&counterStart);
-    int hybrid_comparison = hybrid_sort(array_random, 0, size-1, 165);
-    QueryPerformanceCounter(&counterEnd);
-
-
-    /*
-    for (int i{0}; i < size; ++i) {
-        std::cout << array_random[i] << ' ';
-    }
-    */
-
-    std::cout << '\n';
-    //print the key comparisons
-    std::cout <<  "The number of key comparisons = " + std::to_string(hybrid_comparison);
-    std::cout << '\n';
-
-
-
-    time = (double)((double)(counterEnd.QuadPart - counterStart.QuadPart)/(double)frequency.QuadPart);
-
-    //change from seconds to microseconds
-    time *= 1000000;
-
-
-
-    std::ostringstream ss;
-    ss.precision(3);
-    ss << std::fixed << time;
-    std::cout << "The time it took for hybrid_sort to sort random array is " + ss.str() + " microseconds";
-
-
-    std::cout << '\n';
-    std::cout << '\n';
-
-    //original merge_sort implementation
-
-    QueryPerformanceCounter(&counterStart);
-    int merge_comparison = merge_sort(array_random, 0, size-1);
-    QueryPerformanceCounter(&counterEnd);
-
-    /*
-    for (int i{0}; i < size; ++i) {
-        std::cout << array_random[i] << ' ';
-    }
-    */
-
-    std::cout << '\n';
-    //print the key comparisons
-    std::cout <<  "The number of key comparisons = " + std::to_string(merge_comparison);
-
-    std::cout << '\n';
-
-    time = (double)((double)(counterEnd.QuadPart - counterStart.QuadPart)/(double)frequency.QuadPart);
-
-    //change from seconds to milliseconds
-    time *= 1000000;
-
-    std::ostringstream sd;
-    sd.precision(3);
-    sd << std::fixed << time;
-
-    std::cout << "The time it took for merge_sort to sort random array is " + sd.str() + " microseconds";
-
-
-
-
-
 
     //HYBRID                                                                           //FOR ASCENDING
 
@@ -115,12 +46,12 @@ int main() {
     }
 
     std::cout << '\n';
-    std::cout << '\n';
+    std::cout << "FOR ASCENDING ARRAY";
 
     //hybrid performance
 
     QueryPerformanceCounter(&counterStart);
-    hybrid_comparison = hybrid_sort(array_ascending, 0, size-1, 30);
+    int hybrid_comparison = hybrid_sort(array_ascending, 0, size-1, 30);
     QueryPerformanceCounter(&counterEnd);
 
     /*
@@ -150,13 +81,13 @@ int main() {
 
 
     std::cout << '\n';
-    std::cout << '\n';
+
 
 
     //MERGE
 
     QueryPerformanceCounter(&counterStart);
-    merge_comparison = merge_sort(array_ascending, 0, size-1);
+    int merge_comparison = merge_sort(array_ascending, 0, size-1);
     QueryPerformanceCounter(&counterEnd);
 
 
@@ -187,8 +118,6 @@ int main() {
 
 
 
-
-
     //HYBRID                                                                           //FOR DESCENDING
     j = n;
     for (i=0;i<n;i++){
@@ -198,6 +127,8 @@ int main() {
 
     std::cout << '\n';
     std::cout << '\n';
+    std::cout << '\n';
+    std::cout << "FOR DESCENDING ARRAY\n";
     //hybrid performance
 
     QueryPerformanceCounter(&counterStart);
@@ -210,7 +141,6 @@ int main() {
     }
     */
 
-    std::cout << '\n';
     //print the key comparisons
     std::cout <<  "The number of key comparisons = " + std::to_string(hybrid_comparison);
     std::cout << '\n';
@@ -231,7 +161,7 @@ int main() {
 
 
     std::cout << '\n';
-    std::cout << '\n';
+
 
 
     //MERGE
@@ -266,6 +196,75 @@ int main() {
 
     std::cout << '\n';
 
+
+    //hybrid performance                                                                    //FOR RANDOM
+
+    QueryPerformanceCounter(&counterStart);
+    hybrid_comparison = hybrid_sort(array_random, 0, size-1, 165);
+    QueryPerformanceCounter(&counterEnd);
+
+
+    /*
+    for (int i{0}; i < size; ++i) {
+        std::cout << array_random[i] << ' ';
+    }
+    */
+
+    std::cout << '\n';
+    std::cout << '\n';
+    std::cout << "FOR RANDOM ARRAY\n";
+    //print the key comparisons
+    std::cout <<  "The number of key comparisons = " + std::to_string(hybrid_comparison);
+    std::cout << '\n';
+
+
+
+    time = (double)((double)(counterEnd.QuadPart - counterStart.QuadPart)/(double)frequency.QuadPart);
+
+    //change from seconds to microseconds
+    time *= 1000000;
+
+
+
+    std::ostringstream ss;
+    ss.precision(3);
+    ss << std::fixed << time;
+    std::cout << "The time it took for hybrid_sort to sort random array is " + ss.str() + " microseconds";
+
+
+    std::cout << '\n';
+
+
+    //original merge_sort implementation
+
+    QueryPerformanceCounter(&counterStart);
+    merge_comparison = merge_sort(array_random, 0, size-1);
+    QueryPerformanceCounter(&counterEnd);
+
+    /*
+    for (int i{0}; i < size; ++i) {
+        std::cout << array_random[i] << ' ';
+    }
+    */
+
+    std::cout << '\n';
+    //print the key comparisons
+    std::cout <<  "The number of key comparisons = " + std::to_string(merge_comparison);
+
+    std::cout << '\n';
+
+    time = (double)((double)(counterEnd.QuadPart - counterStart.QuadPart)/(double)frequency.QuadPart);
+
+    //change from seconds to milliseconds
+    time *= 1000000;
+
+    std::ostringstream sd;
+    sd.precision(3);
+    sd << std::fixed << time;
+
+    std::cout << "The time it took for merge_sort to sort random array is " + sd.str() + " microseconds";
+
+    std::cout << '\n';
     return 0;
 }
 
