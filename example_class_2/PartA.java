@@ -13,8 +13,9 @@ class AGraph {
         this.size = size;
     }
 
+    // Initialise a graph with a given graph.
+    // This method assumes that the given graph is a valid square matrix.
     public AGraph(int[][] graph) {
-        // This method assumes that the given graph is a valid square matrix.
         matrix = graph;
         this.size = graph.length;
     }
