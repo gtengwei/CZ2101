@@ -3,8 +3,9 @@ import java.util.*;
 class AGraph {
     // This is a graph implementation that is used for Part A
     // The graph is represented as an array of arrays.
-    private int[][] matrix;
-    private int size;
+    // The Dijsktra's Algorithm used in this part is an array.
+    private final int[][] matrix;
+    private final int size;
 
     // Initialise a graph with a given size.
     public AGraph(int size) {
@@ -12,13 +13,10 @@ class AGraph {
         this.size = size;
     }
 
-    public AGraph(int size, int[][] graph) {
-        if (size == 0) {
-            return;
-        }
-        assert (size == graph.length && size == graph[0].length);
+    public AGraph(int[][] graph) {
+        // This method assumes that the given graph is a valid square matrix.
         matrix = graph;
-        this.size = size;
+        this.size = graph.length;
     }
 
     // Add an edge to the graph. If it already exists, then override it.
