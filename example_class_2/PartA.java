@@ -1,9 +1,10 @@
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 class AGraph {
     // This is a graph implementation that is used for Part A
     // The graph is represented as an array of arrays.
-    // The Dijsktra's Algorithm used in this part is an array.
+    // The Dijkstra's Algorithm used in this part is an array.
     private final int[][] matrix;
     private final int size;
 
