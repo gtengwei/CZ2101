@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class Main {
-	public static void main(String[] args) {
+	private static final int MAX_SIZE = 100;
+	private static final int MAX_ITERATION = 1000;
 
-		final int MAXSIZE = 100; // MAXSIZE
-		final int MAXITERATION = 1000; // MAXITERATION
+	public static void main(String[] args) {
 		int iteration, size;
 		long total = 0;
 
@@ -19,7 +19,7 @@ public class Main {
 
 		try (PrintWriter writer = new PrintWriter(new File("result.csv"))) {
 			// start from size 2
-			for (size = 2; size < MAXSIZE; size++) {
+			for (size = 2; size < MAX_SIZE; size++) {
 
 				// Determine range of weight of each edge
 				int min = 0;
@@ -46,7 +46,7 @@ public class Main {
 				}
 
 				// Run iteration to get average running time
-				for (iteration = 0; iteration < MAXITERATION; iteration++) {
+				for (iteration = 0; iteration < MAX_ITERATION; iteration++) {
 
 					// Start
 					long start = System.nanoTime();
@@ -72,7 +72,7 @@ public class Main {
 				sb.append(',');
 
 				// Append average running time for each size
-				sb.append(total / MAXITERATION);
+				sb.append(total / MAX_ITERATION);
 				sb.append('\n');
 				System.out.println("done!");
 
