@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.concurrent.ThreadLocalRandom;
@@ -7,15 +6,24 @@ public class Main {
     private static final int MAX_SIZE = 100;
     private static final int MAX_ITERATION = 1000;
 
-    public static void main(String[] args) {
-        /*
-        We know that from complexity.md, the timings for the algorithms
-        are somewhat impacted by:
-        1. V, the number of vertices.
-        2. E, the number of edges in the graph.
+    // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+    private static final int[][] testGraph = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
+            { 0, 8, 0, 7, 0, 4, 0, 0, 2 }, { 0, 0, 7, 0, 9, 14, 0, 0, 0 }, { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
+            { 0, 0, 4, 14, 10, 0, 2, 0, 0 }, { 0, 0, 0, 0, 0, 2, 0, 1, 6 }, { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
+            { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 
-        Hence, when timing the code, we have to find a way to vary these 2 variables.
-        */
+    public static void main(String[] args) {
+        testAGraph();
+    }
+
+    public static void generateTimings() {
+        /*
+         * We know that from complexity.md, the timings for the algorithms are somewhat
+         * impacted by: 1. V, the number of vertices. 2. E, the number of edges in the
+         * graph.
+         * 
+         * Hence, when timing the code, we have to find a way to vary these 2 variables.
+         */
         int iteration, size;
         long total = 0;
 
@@ -88,6 +96,17 @@ public class Main {
             writer.write(sb.toString());
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    // Tests the implementation of the AGraph.
+    public static void testAGraph() {
+        AGraph a = new AGraph(testGraph);
+        int[] res = a.performDijkstra(0);
+        
+        System.out.println("Distance from Source");
+        for(int i = 0; i < testGraph.length; ++i) {
+            System.out.printf("%d t %d\n", i, res[i]);
         }
     }
 }
