@@ -8,6 +8,14 @@ public class Main {
 	private static final int MAX_ITERATION = 1000;
 
 	public static void main(String[] args) {
+		/*
+		We know that from complexity.md, the timings for the algorithms 
+		are somewhat impacted by:
+		1. V, the number of vertices.
+		2. E, the number of edges in the graph.
+
+		Hence, when timing the code, we have to find a way to vary these 2 variables.
+		*/
 		int iteration, size;
 		long total = 0;
 
