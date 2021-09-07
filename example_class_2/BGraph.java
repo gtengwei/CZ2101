@@ -1,11 +1,10 @@
 import java.util.*;
 
-
 public class BGraph {
     // This is a graph implementation that is used for Part B.
     // The graph is represented as an array of linked lists.
     // The Dijkstra's Algorithm used in this part is a min-heap.
-    private List<LinkedList<Pair>> adjList;
+    private List<LinkedList<Edge>> adjList;
     public int v;
     public int e;
 
@@ -22,14 +21,14 @@ public class BGraph {
     // NOTE: For testing purposes only!
     // Does not update the E value.
     // Initialise a graph with a given adjacency list.
-    public BGraph(List<LinkedList<Pair>> list) {
+    public BGraph(List<LinkedList<Edge>> list) {
         adjList = list;
         this.v = list.size();
     }
 
     // Add an edge to the graph. If it already exists, then override it.
     public void addEdge(int from, int to, int weight) {
-        LinkedList<Pair> neighbours = adjList.get(from);
+        LinkedList<Edge> neighbours = adjList.get(from);
         // Check current neighbours
         for (int i = 0; i < neighbours.size(); ++i) {
             // If the edge already exists, then we update it then return.
@@ -40,17 +39,17 @@ public class BGraph {
         }
         // If edge does not exist, we add it.
         ++this.e;
-        neighbours.add(new Pair(to, weight));
+        neighbours.add(new Edge(to, weight));
     }
 }
 
-// Pair class stores the edge, including its weight.
-// a is the vertex, and b is the weight.
-class Pair {
+// Edge class stores the edge, including its weight.
+// a is the vertex to connect to, and b is the weight of the edge.
+class Edge {
     public int a;
     public int b;
 
-    public Pair(int a, int b) {
+    public Edge(int a, int b) {
         this.a = a;
         this.b = b;
     }
