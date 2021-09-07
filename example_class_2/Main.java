@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.*;
 
 public class Main {
     private static final int MAX_SIZE = 100;
@@ -14,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
         testAGraph();
+        testBGraph();
     }
 
     public static void generateTimings() {
@@ -106,6 +108,31 @@ public class Main {
         
         System.out.println("Distance from Source");
         for(int i = 0; i < testGraph.length; ++i) {
+            System.out.printf("%d t %d\n", i, res[i]);
+        }
+    }
+
+    public static void testBGraph() {
+        // Create the adjacency list for the B graph.
+        List<LinkedList<Edge>> adjList = new ArrayList<>();
+        for (int i = 0; i < testGraph.length; ++i) {
+            adjList.add(new LinkedList<>());
+        }
+
+        for (int row = 0; row < testGraph.length; ++row) {
+            for (int col = 0; col < testGraph[row].length; ++col) {
+                if (testGraph[row][col] == 0) {
+                    continue;
+                }
+                adjList.get(row).add(new Edge(col, testGraph[row][col]));
+            }
+        }
+
+        BGraph b = new BGraph(adjList);
+        int[] res = b.performDijkstra(0);
+
+        System.out.println("Distance from Source");
+        for (int i = 0; i < testGraph.length; ++i) {
             System.out.printf("%d t %d\n", i, res[i]);
         }
     }

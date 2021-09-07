@@ -48,6 +48,7 @@ public class AGraph {
 
     // This method performs Dijkstra's Algorithm on the graph,
     // and returns an array of weights from the source to all nodes.
+    // The algorithm uses an adjacency matrix and an array for the priority queue.
     public int[] performDijkstra(int source) {
         // Create all necessary data structures to perform this algorithm.
         Set<Integer> visited = new HashSet<>(); // This set stores all visited node indices.
