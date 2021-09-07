@@ -30,16 +30,21 @@ public class BGraph {
     public void addEdge(int from, int to, int weight) {
         LinkedList<Edge> neighbours = adjList.get(from);
         // Check current neighbours
-        for (int i = 0; i < neighbours.size(); ++i) {
-            // If the edge already exists, then we update it then return.
-            if (neighbours.get(i).a == to) {
-                neighbours.get(i).b = weight;
+        Iterator<Edge> iter = neighbours.iterator();
+        while (iter.hasNext()) {
+            Edge node = iter.next();
+            if (node.a == to) {
+                node.b = weight;
                 return;
             }
         }
         // If edge does not exist, we add it.
         ++this.e;
         neighbours.add(new Edge(to, weight));
+    }
+
+    public int[] performDijkstra(int source) {
+        throw new UnsupportedOperationException();
     }
 }
 

@@ -60,6 +60,8 @@ public class AGraph {
         weights[source] = 0;
 
         // In this part, the array is used as the priority queue.
+
+        // While there are still unvisited nodes.
         while (visited.size() != v) {
             // Get the next minimum node
             int node = this.getMinimum(weights, visited);
