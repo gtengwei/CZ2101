@@ -33,8 +33,8 @@ public class BGraph {
         Iterator<Edge> iter = neighbours.iterator();
         while (iter.hasNext()) {
             Edge node = iter.next();
-            if (node.a == to) {
-                node.b = weight;
+            if (node.to == to) {
+                node.weight = weight;
                 return;
             }
         }
@@ -44,18 +44,45 @@ public class BGraph {
     }
 
     public int[] performDijkstra(int source) {
+        // Create all necessary data structures for this algorithm
+        Set<Integer> visited = new HashSet<>(); // Stores all visited node indices.
+        int[] weights = new int[v]; // Stores the weights.
+        for (int i = 0; i < v; ++i) {
+            weights[i] = Integer.MAX_VALUE;
+        }
+
+        // Set the source weight to 0
+        weights[source] = 0;
+
+        // Create the priority queue. In this part, we are using a min-heap.
+        // Thankfully, Java already has a built-in PriorityQueue
+        // that is implemented with a MinHeap!
+        PriorityQueue<Edge> q = new PriorityQueue<>(v);
+        // Add the elements into the queue.
+        for (int i = 0; i < v; ++i) {
+            q.add(new Edge(i, weights[i]));
+        }
+
         throw new UnsupportedOperationException();
     }
 }
 
 // Edge class stores the edge, including its weight.
 // a is the vertex to connect to, and b is the weight of the edge.
-class Edge {
-    public int a;
-    public int b;
+class Edge implements Comparable<Edge> {
+    public int to;
+    public int weight;
 
-    public Edge(int a, int b) {
-        this.a = a;
-        this.b = b;
+    public Edge(int to, int weight) {
+        this.to = to;
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Edge e) {
+        // If current edge is more, then it returns +ve value (greater than).
+        // If both weight same, returns 0 (equal to).
+        // If current edge is less, then it return -ve value (lesser than).
+        return weight - e.weight;
     }
 }
