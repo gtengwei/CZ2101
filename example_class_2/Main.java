@@ -6,6 +6,7 @@ import java.util.*;
 public class Main {
     private static final int MAX_SIZE = 100;
     private static final int MAX_ITERATION = 1000;
+    private static final int MAX_WEIGHT = 1000;
 
     // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
     private static final int[][] testGraph = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
@@ -16,6 +17,50 @@ public class Main {
     public static void main(String[] args) {
         testAGraph();
         testBGraph();
+    }
+
+    public void generateTimings2() {
+        /*
+         * We know that from complexity.md, the timings for the algorithms are somewhat
+         * impacted by: 1. V, the number of vertices. 2. E, the number of edges in the
+         * graph.
+         * 
+         * Hence, when timing the code, we have to find a way to vary these 2 variables.
+         */
+
+        // We iterate through different sizes for the graph.
+        for (int v_size = 2; v_size < MAX_SIZE; ++v_size) {
+            // Create the graphs of the appropriate size.
+            AGraph aGraph = new AGraph(v_size);
+            BGraph bGraph = new BGraph(v_size);
+            
+
+            // Store a list of all possible edges in the graph.
+            List<Pair> edges = new ArrayList<>();
+            for (int i = 0; i < v_size; ++i) {
+                for (int j = 0; j < v_size; ++j) {
+                    // Do not add an edge to oneself.
+                    if (i == j) {
+                        continue;
+                    }
+                    edges.add(new Pair(i, j));
+                }
+            }
+            // Shuffle the array to poll random edges from the graph.
+            Collections.shuffle(edges);
+
+            // For each pair, add it to the graph, then time Dijkstra's Algorithm.
+            for (Pair e: edges) {
+                // Get a random weight for the edge.
+                int weight = ThreadLocalRandom.current().nextInt(1, MAX_WEIGHT);
+                aGraph.addEdge(e.from, e.to, weight);
+                bGraph.addEdge(e.from, e.to, weight);
+
+                // Then time for each graph type.
+                aGraph.performDijkstra(0);
+                bGraph.performDijkstra(0);
+            }
+        } 
     }
 
     public static void generateTimings() {
@@ -135,5 +180,16 @@ public class Main {
         for (int i = 0; i < testGraph.length; ++i) {
             System.out.printf("%d t %d\n", i, res[i]);
         }
+    }
+}
+
+// This is used to store a possible edge between 2 vertices.
+class Pair {
+    public int from;
+    public int to;
+
+    public Pair(int from, int to) {
+        this.from = from;
+        this.to = to;
     }
 }

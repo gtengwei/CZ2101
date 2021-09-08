@@ -95,6 +95,8 @@ public class BGraph {
 
 
 // PathWeight stores the vertex, and the weight of travelling there.
+// This is used to store the current weights to a particular vertex
+// for the priority queue.
 class PathWeight implements Comparable<PathWeight> {
     public int v;
     public int weight;
@@ -116,6 +118,7 @@ class PathWeight implements Comparable<PathWeight> {
 
 // Edge class stores the edge, including its weight.
 // a is the vertex to connect to, and b is the weight of the edge.
+// This is used for the adjacency list.
 class Edge {
     public int to;
     public int weight;
