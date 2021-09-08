@@ -68,6 +68,12 @@ public class BGraph {
         while (visited.size() != v) {
             // Get the next node to be checked.
             PathWeight e = q.poll();
+
+            // If returned node is null, means no more item in the queue.
+            if (e == null) {
+                break;
+            }
+
             if (visited.contains(e.v)) {
                 continue;
             }

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
     private static final int MAX_SIZE = 100;
-    private static final int MAX_ITERATION = 1000;
+    private static final int MAX_ITERATION = 1;
     private static final int MAX_WEIGHT = 1000;
 
     // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
@@ -15,11 +15,12 @@ public class Main {
             { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 
     public static void main(String[] args) {
-        testAGraph();
-        testBGraph();
+        //testAGraph();
+        //testBGraph();
+        generateTimings2();
     }
 
-    public void generateTimings2() {
+    public static void generateTimings2() {
         /*
          * We know that from complexity.md, the timings for the algorithms are somewhat
          * impacted by: 1. V, the number of vertices. 2. E, the number of edges in the
@@ -30,6 +31,7 @@ public class Main {
 
         // We iterate through different sizes for the graph.
         for (int v_size = 2; v_size < MAX_SIZE; ++v_size) {
+            System.out.printf("Testing size %d\n", v_size);
             // Create the graphs of the appropriate size.
             AGraph aGraph = new AGraph(v_size);
             BGraph bGraph = new BGraph(v_size);
@@ -53,12 +55,19 @@ public class Main {
             for (Pair e: edges) {
                 // Get a random weight for the edge.
                 int weight = ThreadLocalRandom.current().nextInt(1, MAX_WEIGHT);
+                // System.out.printf("Adding edge from %d to %d with weight %d\n", e.from, e.to, weight);
                 aGraph.addEdge(e.from, e.to, weight);
                 bGraph.addEdge(e.from, e.to, weight);
 
                 // Then time for each graph type.
-                aGraph.performDijkstra(0);
-                bGraph.performDijkstra(0);
+                for (int iter = 0; iter < MAX_ITERATION; ++iter) {
+                    int[] resA = aGraph.performDijkstra(0);
+                    int[] resB = bGraph.performDijkstra(0);
+                    // System.out.println("Asserting...");
+                    for (int i = 0; i < v_size; ++i) {  
+                        assert(resA[i] == resB[i]);
+                    }
+                }
             }
         } 
     }

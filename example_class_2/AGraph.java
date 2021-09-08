@@ -35,7 +35,7 @@ public class AGraph {
 
     // This function returns the smallest node from the array priority queue.
     public int getMinimum(int[] weights, Set<Integer> visited) {
-        int min_index = 0;
+        int min_index = -1;
         int min_value = Integer.MAX_VALUE;
         for (int i = 0; i < v; ++i) {
             if (!visited.contains(i) && weights[i] < min_value) {
@@ -66,6 +66,12 @@ public class AGraph {
         while (visited.size() != v) {
             // Get the next minimum node
             int node = this.getMinimum(weights, visited);
+
+            // If returned node is -1, means no more item in the queue.
+            if (node == -1) {
+                break;
+            }
+
             visited.add(node);
             // Loop through the neighbours for this node
             for (int n_index = 0; n_index < v; ++n_index) {
