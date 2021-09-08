@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Main {
     private static final int MAX_SIZE = 70;
-    private static final int MAX_ITERATION = 10;
+    private static final int MAX_ITERATION = 100;
     private static final int MAX_WEIGHT = 1000;
 
     // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
