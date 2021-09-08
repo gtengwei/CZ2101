@@ -1,11 +1,12 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
 public class Main {
-    private static final int MAX_SIZE = 100;
-    private static final int MAX_ITERATION = 1;
+    private static final int MAX_SIZE = 70;
+    private static final int MAX_ITERATION = 10;
     private static final int MAX_WEIGHT = 1000;
 
     // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
@@ -15,12 +16,10 @@ public class Main {
             { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 
     public static void main(String[] args) {
-        //testAGraph();
-        //testBGraph();
-        generateTimings2();
+        generateTimings();
     }
 
-    public static void generateTimings2() {
+    public static void generateTimings() {
         /*
          * We know that from complexity.md, the timings for the algorithms are somewhat
          * impacted by: 1. V, the number of vertices. 2. E, the number of edges in the
@@ -30,8 +29,15 @@ public class Main {
          */
 
         // We iterate through different sizes for the graph.
+
+        // Write CSV results.
+        StringBuilder builder = new StringBuilder();
+        // Columns.
+        builder.append("type,v,e,time\n");
+
         for (int v_size = 2; v_size < MAX_SIZE; ++v_size) {
             System.out.printf("Testing size %d\n", v_size);
+
             // Create the graphs of the appropriate size.
             AGraph aGraph = new AGraph(v_size);
             BGraph bGraph = new BGraph(v_size);
@@ -55,24 +61,36 @@ public class Main {
             for (Pair e: edges) {
                 // Get a random weight for the edge.
                 int weight = ThreadLocalRandom.current().nextInt(1, MAX_WEIGHT);
-                // System.out.printf("Adding edge from %d to %d with weight %d\n", e.from, e.to, weight);
                 aGraph.addEdge(e.from, e.to, weight);
                 bGraph.addEdge(e.from, e.to, weight);
 
                 // Then time for each graph type.
+                long[] timings = new long[4];
                 for (int iter = 0; iter < MAX_ITERATION; ++iter) {
+                    timings[0] += System.nanoTime();
                     int[] resA = aGraph.performDijkstra(0);
+                    timings[1] += System.nanoTime();
+
+                    timings[2] += System.nanoTime();
                     int[] resB = bGraph.performDijkstra(0);
-                    // System.out.println("Asserting...");
+                    timings[3] += System.nanoTime();
                     for (int i = 0; i < v_size; ++i) {  
                         assert(resA[i] == resB[i]);
                     }
                 }
+                builder.append(String.format("%s,%d,%d,%f\n", "matrix", aGraph.v, aGraph.e, (double)(timings[1]-timings[0])/MAX_ITERATION));
+                builder.append(String.format("%s,%d,%d,%f\n", "list", bGraph.v, bGraph.e, (double)(timings[3]-timings[2])/MAX_ITERATION));
             }
-        } 
+        }
+
+        try (PrintWriter writer = new PrintWriter("results.csv")) {
+            writer.write(builder.toString());
+        } catch (IOException e) {
+            System.out.printf("Error writing file: %s", e.toString());
+        }
     }
 
-    public static void generateTimings() {
+    public static void generateTimings_old() {
         /*
          * We know that from complexity.md, the timings for the algorithms are somewhat
          * impacted by: 1. V, the number of vertices. 2. E, the number of edges in the
