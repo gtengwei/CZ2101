@@ -1,12 +1,11 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 
 public class Main {
-    private static final int MAX_SIZE = 70;
-    private static final int MAX_ITERATION = 100;
+    private static final int MAX_SIZE = 80;
+    private static final int MAX_ITERATION = 90;
     private static final int MAX_WEIGHT = 1000;
 
     // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
@@ -68,15 +67,12 @@ public class Main {
                 long[] timings = new long[4];
                 for (int iter = 0; iter < MAX_ITERATION; ++iter) {
                     timings[0] += System.nanoTime();
-                    int[] resA = aGraph.performDijkstra(0);
+                    aGraph.performDijkstra(0);
                     timings[1] += System.nanoTime();
 
                     timings[2] += System.nanoTime();
-                    int[] resB = bGraph.performDijkstra(0);
+                    bGraph.performDijkstra(0);
                     timings[3] += System.nanoTime();
-                    for (int i = 0; i < v_size; ++i) {  
-                        assert(resA[i] == resB[i]);
-                    }
                 }
                 builder.append(String.format("%s,%d,%d,%f\n", "matrix", aGraph.v, aGraph.e, (double)(timings[1]-timings[0])/MAX_ITERATION));
                 builder.append(String.format("%s,%d,%d,%f\n", "list", bGraph.v, bGraph.e, (double)(timings[3]-timings[2])/MAX_ITERATION));
@@ -87,89 +83,6 @@ public class Main {
             writer.write(builder.toString());
         } catch (IOException e) {
             System.out.printf("Error writing file: %s", e.toString());
-        }
-    }
-
-    public static void generateTimings_old() {
-        /*
-         * We know that from complexity.md, the timings for the algorithms are somewhat
-         * impacted by: 1. V, the number of vertices. 2. E, the number of edges in the
-         * graph.
-         * 
-         * Hence, when timing the code, we have to find a way to vary these 2 variables.
-         */
-        int iteration, size;
-        long total = 0;
-
-        // Header of CSV file
-        StringBuilder sb = new StringBuilder();
-        sb.append("Size,");
-        sb.append("Time");
-        sb.append('\n');
-
-        try (PrintWriter writer = new PrintWriter("result.csv")) {
-            // start from size 2
-            for (size = 2; size < MAX_SIZE; size++) {
-
-                // Determine range of weight of each edge
-                int min = 0;
-                int max = 15;
-
-                // Initialise empty graph
-                int[][] randomWeightedGraph = new int[size][size];
-
-                // Create a test graph.
-                /*
-                 * int[][] graph = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, { 4, 0, 8, 0, 0, 0, 0, 11, 0
-                 * }, { 0, 8, 0, 7, 0, 4, 0, 0, 2 }, { 0, 0, 7, 0, 9, 14, 0, 0, 0 }, { 0, 0, 0,
-                 * 9, 0, 10, 0, 0, 0 }, { 0, 0, 4, 14, 10, 0, 2, 0, 0 }, { 0, 0, 0, 0, 0, 2, 0,
-                 * 1, 6 }, { 8, 11, 0, 0, 0, 0, 1, 0, 7 }, { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
-                 */
-
-                // Insert random weight for each edge, within the range of min,max
-                for (int i = 0; i < randomWeightedGraph.length; i++) {
-                    for (int j = 0; j < randomWeightedGraph.length; j++) {
-                        int weight = ThreadLocalRandom.current().nextInt(min, max);
-                        randomWeightedGraph[i][j] = weight;
-                    }
-
-                }
-
-                // Run iteration to get average running time
-                for (iteration = 0; iteration < MAX_ITERATION; iteration++) {
-
-                    // Start
-                    long start = System.nanoTime();
-                    AGraph a_graph = new AGraph(randomWeightedGraph);
-                    int[] result = a_graph.performDijkstra(0);
-
-                    // End
-                    long end = System.nanoTime();
-
-                    System.out.println("Distance from Source");
-                    for (int i = 0; i < randomWeightedGraph.length; ++i) {
-                        System.out.printf("%d t %d\n", i, result[i]);
-                    }
-
-                    // Add up total running time for MAXITERATIONS in nanaseconds
-                    total += (end - start);
-                    System.out.println("Time taken: " + (end - start) + " nanoseconds");
-
-                } // for MAXITERATION
-
-                // Append size of matrix to CSV
-                sb.append(size);
-                sb.append(',');
-
-                // Append average running time for each size
-                sb.append(total / MAX_ITERATION);
-                sb.append('\n');
-                System.out.println("done!");
-
-            } // for maxSize
-            writer.write(sb.toString());
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
         }
     }
 
