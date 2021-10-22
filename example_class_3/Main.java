@@ -1,7 +1,6 @@
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		int[] weight = {4,6,8};
 	    int[] profit = {7,6,9};
 		
