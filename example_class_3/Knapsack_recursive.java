@@ -20,7 +20,7 @@ class Knapsack_recursive {
         
         else{
         	return Math.max(Math.max(P(C,index,weight,profit), profit[index] + P(C - weight[index], index,weight,profit)), 
-                        Math.max(profit[index] + P(C - weight[index], index,weight,profit), profit[index] + P(C - weight[index], index,weight,profit)));
+                        Math.max(profit[index] + P(C - weight[index], index,weight,profit), profit[index] + P(C - weight[index], index+1,weight,profit)));
         }
     }
 
