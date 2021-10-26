@@ -13,8 +13,8 @@ public class Knapsack {
         System.out.println();
 
         System.out.print("The profits for the objects are: ");
-        for (int i = 0; i < profit.length; i++) {
-            System.out.print(+profit[i] + " ");
+        for (int j : profit) {
+            System.out.print(j + " ");
         }
         System.out.println();
 
@@ -31,8 +31,8 @@ public class Knapsack {
         System.out.println();
 
         System.out.print("The profits for the objects are: ");
-        for (int i = 0; i < profit.length; i++) {
-            System.out.print(+profit[i] + " ");
+        for (int j : profit) {
+            System.out.print(j + " ");
         }
         System.out.println();
 
