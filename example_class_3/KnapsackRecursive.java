@@ -1,9 +1,9 @@
-class Knapsack_recursive {
+class KnapsackRecursive {
     public int row;
     public int col;
     public int C;
 
-    public Knapsack_recursive() {
+    public KnapsackRecursive() {
     }
 
     public int P(int C, int n, int[] weight, int[] profit) { // j = number of objects

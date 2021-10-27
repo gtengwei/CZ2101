@@ -1,5 +1,5 @@
-public class Knapsack_dynamic {
-    public Knapsack_dynamic() {
+public class KnapsackDynamic {
+    public KnapsackDynamic() {
     }
 
     public int knapsack(int C, int n, int[] weight, int[] profit) {

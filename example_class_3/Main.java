@@ -1,10 +1,12 @@
-public class Knapsack {
+public class Main {
     public static void main(String[] args) {
         int[] weight1 = {4, 6, 8};
         int[] profit = {7, 6, 9};
+
         int[] weight2 = {5, 6, 8};
-        Knapsack_recursive recur = new Knapsack_recursive();
-        Knapsack_dynamic dyna = new Knapsack_dynamic();
+
+        KnapsackRecursive recur = new KnapsackRecursive();
+        KnapsackDynamic dyna = new KnapsackDynamic();
 
         System.out.print("The weights for the objects are: ");
         for (int i = 0; i < profit.length; i++) {
